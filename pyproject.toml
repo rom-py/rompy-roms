@@ -3,35 +3,32 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
+dependencies = [
+  "rompy",
+  "typer",
+]
 name = "rompy_roms"
-version = "0.1.0"
-description = "Rompy Roms Config package."
+description = "Rompy ROMS Config package."
 readme = "README.rst"
 authors = [
-  {name = "Rompy Developers", email = "developers@rompy.com"}
+    { name = "Rompy Developers", email = "developers@rompy.com" },
 ]
 maintainers = [
-  {name = "Rompy Developers", email = "developers@rompy.com"}
+    { name = "Rompy Developers", email = "developers@rompy.com" },
 ]
-classifiers = [
+classifiers = []
+license = { text = "BSD license" }
 
-]
-license = {text = "MIT license"}
-dependencies = [
-  # "rompy",
-  "rompy @ git+https://github.com/rom-py/rompy.git@main",
-  "pyschism @ git+https://github.com/oceanum/pyschism.git", # Needed until schism is split from rompy
-  "typer"
-]
+dynamic = ["version"]
 
 [project.optional-dependencies]
-dev = [
-    "coverage",
-    "mypy",
-    "pytest",
-    "ruff"
+dev = ["coverage", "mypy", "pytest", "ruff", "requests"]
+docs = [
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocstrings[python]",
+    "pymdown-extensions",
 ]
-
 [project.scripts]
 rompy_roms = "rompy_roms.cli:app"
 
@@ -40,7 +37,7 @@ roms = "rompy_roms.config:Config"
 
 [project.entry-points."rompy.source"]
 # Register here any new source. For example:
-# xbeach_source_type = "rompy_roms.source:RomsSource"
+# roms_source_type = "rompy_roms.source:ROMSSource"
 
 [project.urls]
 bugs = "https://github.com/rom-py/rompy_roms/issues"
@@ -48,7 +45,21 @@ changelog = "https://github.com/rom-py/rompy_roms/blob/master/changelog.md"
 homepage = "https://github.com/rom-py/rompy_roms"
 
 [tool.setuptools]
-package-dir = {"" = "src"}
+package-dir = { "" = "src" }
 
 [tool.setuptools.package-data]
 "*" = ["*.*"]
+
+[tool.setuptools.dynamic]
+version = { attr = "rompy_roms.__version__" }
+
+[tool.ruff]
+line-length = 88
+indent-width = 4
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = false
